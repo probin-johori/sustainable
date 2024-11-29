@@ -63,7 +63,7 @@ export default function Home() {
                 width={32}
                 height={32}
               />
-              <span className="font-semibold text-xl">Sustainable Brands</span>
+              <span className="font-semibold text-xl">EcoStamped</span>
             </div>
 
             <div className="flex items-center gap-4">
