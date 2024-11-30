@@ -22,6 +22,13 @@ export interface SustainableBrand {
     email: string;
     phone: string;
   };
+  sustainabilityRatings: {
+    environmental: number;
+    social: number;
+    ethical: number;
+    durability: number;
+    innovation: number;
+  };
 }
 
 // Enum for business types
@@ -69,7 +76,7 @@ export const sustainableBrands: SustainableBrand[] = [
     thumbnail: "/brands/no-nasties/thumbnail.jpg",
     imageUrl: "/banners/no-nasties.png",
     business: BusinessType.B2C,
-    categories: [Category.CLOTHING], // Updated categories
+    categories: [Category.CLOTHING],
     shortDescription: "Planet-positive fashion brand turning every purchase into climate action through 300% carbon offset and tree planting",
     description: `No Nasties is a revolutionary eco-conscious fashion brand that goes beyond sustainability to create a positive impact on our planet. Their unique approach combines 100% organic cotton, local supply chains, and a triple carbon offset strategy that removes more CO2 than their products create. For every purchase, they plant 3 trees, contributing to their Mission Million goal of planting one million trees by 2030. Through their "Planet Positive" commitment, they transform everyday fashion choices into meaningful climate action, proving that style and environmental responsibility can go hand in hand. With their motto "Don't Panic. It's 100% Organic," No Nasties demonstrates that fashion can be both ethical and impactful.`,
     url: "https://nonasties.in",
@@ -81,14 +88,21 @@ export const sustainableBrands: SustainableBrand[] = [
       likes: 850
     },
     images: [
-      "/brands/no-nasties/collection1.jpg",
-      "/brands/no-nasties/workshop.jpg",
-      "/brands/no-nasties/process.jpg"
+      "/brands/no-nasties/CloudSleepShorts4.webp",
+      "/brands/no-nasties/StarlitNightShirt2.webp",
+      "/brands/no-nasties/BlissSleepShorts1.webp"
     ],
     trailer: "https://youtube.com/nonasties-story",
     contact: {
       email: "hello@nonasties.in",
       phone: "+91-9876543210"
+    },
+    sustainabilityRatings: {
+      environmental: 4.8,
+      social: 4.5,
+      ethical: 4.7,
+      durability: 4.2,
+      innovation: 4.6
     }
   },
   {
@@ -97,7 +111,7 @@ export const sustainableBrands: SustainableBrand[] = [
     thumbnail: "/brands/ooo-farms/thumbnail.jpg",
     imageUrl: "/banners/ooo-farms.png",
     business: BusinessType.B2C,
-    categories: [Category.FOOD], // Updated categories
+    categories: [Category.FOOD],
     shortDescription: "Eco-friendly home products and packaging solutions",
     description: `Earthly Goods is a Mumbai-based sustainable brand focusing on home products 
     and packaging solutions. They create alternatives to single-use plastics using bamboo, 
@@ -120,6 +134,13 @@ export const sustainableBrands: SustainableBrand[] = [
     contact: {
       email: "care@earthlygoods.co.in",
       phone: "+91-9876543211"
+    },
+    sustainabilityRatings: {
+      environmental: 4.6,
+      social: 4.3,
+      ethical: 4.5,
+      durability: 4.4,
+      innovation: 4.2
     }
   },
   {
@@ -151,6 +172,13 @@ export const sustainableBrands: SustainableBrand[] = [
     contact: {
       email: "connect@ayurvastra.in",
       phone: "+91-9876543212"
+    },
+    sustainabilityRatings: {
+      environmental: 4.7,
+      social: 4.4,
+      ethical: 4.6,
+      durability: 4.3,
+      innovation: 4.5
     }
   },
   {
@@ -159,7 +187,7 @@ export const sustainableBrands: SustainableBrand[] = [
     thumbnail: "/brands/the-herb-botique/thumbnail.jpg",
     imageUrl: "/banners/the-herb-botique.png",
     business: BusinessType.BOTH,
-    categories: [Category.HOME, Category.HEALTH, Category.FOOD], 
+    categories: [Category.HOME, Category.HEALTH, Category.FOOD],
     shortDescription: "Natural and organic personal care products",
     description: `Green Nest creates natural and organic personal care products using traditional 
     Indian ingredients. Their range includes skincare, haircare, and wellness products made from 
@@ -182,6 +210,13 @@ export const sustainableBrands: SustainableBrand[] = [
     contact: {
       email: "care@greennest.in",
       phone: "+91-9876543213"
+    },
+    sustainabilityRatings: {
+      environmental: 4.5,
+      social: 4.6,
+      ethical: 4.7,
+      durability: 4.1,
+      innovation: 4.4
     }
   },
   {
@@ -213,6 +248,13 @@ export const sustainableBrands: SustainableBrand[] = [
     contact: {
       email: "hello@ecofeast.in",
       phone: "+91-9876543214"
+    },
+    sustainabilityRatings: {
+      environmental: 4.9,
+      social: 4.7,
+      ethical: 4.8,
+      durability: 4.5,
+      innovation: 4.7
     }
   },
   {
@@ -243,9 +285,15 @@ export const sustainableBrands: SustainableBrand[] = [
     contact: {
       email: "hello@thesummerhouse.in",
       phone: "+91-9876543215"
+    },
+    sustainabilityRatings: {
+      environmental: 4.4,
+      social: 4.8,
+      ethical: 4.6,
+      durability: 4.3,
+      innovation: 4.5
     }
-  },
-  
+  }
 ];
 
 export default sustainableBrands;

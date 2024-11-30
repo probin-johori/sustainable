@@ -1,3 +1,4 @@
+// BrandCard.tsx
 import { SustainableBrand } from '@/lib/brands';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,7 +29,7 @@ export const BrandCard = ({ brand }: BrandCardProps) => {
         href={detailsPath}
         className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C6832] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-xl block"
       >
-        <Card className="relative rounded-[12px] border-0 overflow-hidden">
+        <Card className="relative rounded-xl border-0 overflow-hidden">
           <div className="relative w-full pt-[100%]">
             <div className="absolute inset-0 w-full h-full" style={{ backgroundColor: '#F4F3E8' }}>
               {brand.imageUrl && (

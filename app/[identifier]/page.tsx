@@ -1,4 +1,5 @@
-// app/[identifier]/page.tsx
+'use client'
+
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,130 +8,83 @@ import { sustainableBrands } from "@/lib/brands";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { BrandActions } from "./BrandActions";
+import { ImageGallery } from "@/components/ImageGallery";
+import { BrandHeader } from "@/components/BrandHeader";
+import BrandRating from "@/components/BrandRating";
 import {
   Calendar,
   Mail,
   Phone,
+  BookmarkPlus,
+  Share2
 } from "lucide-react";
 
-// Helper function to slugify text
 const slugify = (text: string) => {
   return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 };
 
-// Find brand by identifier
 const getBrandByIdentifier = (identifier: string) => {
   return sustainableBrands.find(
     (brand) => slugify(brand.name) === identifier
   );
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { identifier: string };
-}): Promise<Metadata> {
-  const brand = getBrandByIdentifier(params.identifier);
+type PageParams = { params: { identifier: string } };
 
-  if (!brand) {
-    return {
-      title: "Brand Not Found",
-    };
-  }
-
-  return {
-    title: `${brand.name} - Sustainable Brands India`,
-    description: brand.shortDescription,
-  };
-}
-
-export default function BrandPage({
-  params,
-}: {
-  params: { identifier: string };
-}) {
-  const brand = getBrandByIdentifier(params.identifier);
+export default function BrandPage({ params }: PageParams) {
+  const { identifier } = params;
+  const brand = getBrandByIdentifier(identifier);
 
   if (!brand) {
     notFound();
   }
 
-  const logoPath = `/logos/${slugify(brand.name)}.svg`;
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section with Brand Color */}
-      <div
-        className="h-64 relative flex items-center justify-center"
-        style={{ backgroundColor: brand.themeColor }}
-      >
-        <div className="absolute -bottom-16 w-32 h-32 bg-white rounded-xl shadow-lg flex items-center justify-center p-3">
-          <Image
-            src={logoPath}
-            alt={`${brand.name} logo`}
-            width={96}
-            height={96}
-            className="object-contain"
-          />
-        </div>
-      </div>
+    <div className="min-h-screen bg-white">
+      <BrandHeader searchQuery={""} onSearchChange={function (value: string): void {
+        throw new Error("Function not implemented.");
+      } } />
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 pt-24 pb-16">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">{brand.name}</h1>
-          <div className="flex flex-wrap gap-2 justify-center mb-6">
-            {brand.categories.map((category) => (
-              <Badge
-                key={category}
-                variant="secondary"
-                className="rounded-full"
-              >
-                {category}
-              </Badge>
-            ))}
+      <div className="pt-24 pb-16">
+        <div className="flex justify-between mb-8 px-2 sm:px-40">
+          <div>
+            <h1 className="text-4xl font-bold text-left" style={{ color: '#163400' }}>{brand.name}</h1>
+            <div className="mt-0">
+              {brand.categories.map((category) => (
+                <span key={category} className="mr-2 text-gray-600">{category}</span>
+              ))}
+            </div>
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {brand.shortDescription}
-          </p>
+          <div className="flex items-center gap-6 translate-y-4">
+            <button className="flex items-center gap-2 text-sm hover:text-gray-600">
+              <BookmarkPlus className="w-4 h-4" />
+              <span className="text-sm">Save</span>
+            </button>
+            <button className="flex items-center gap-2 text-sm hover:text-gray-600">
+              <Share2 className="w-4 h-4" />
+              <span className="text-sm">Share</span>
+            </button>
+          </div>
         </div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Info */}
+        <div className="px-2 sm:px-40">
+          <ImageGallery images={brand.images} brandName={brand.name} />
+        </div>
+
+        <div className="mt-5 px-2 sm:px-40">
+          <BrandRating ratings={brand.sustainabilityRatings} />
+          <div className="h-px w-full bg-neutral-200 mt-8" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-2 sm:px-40 mt-8">
           <div className="lg:col-span-2 space-y-8">
-            {/* About */}
-            <Card className="p-6">
+            <div>
               <h2 className="text-2xl font-semibold mb-4">About</h2>
-              <p className="text-muted-foreground whitespace-pre-line">
+              <p className="text-neutral-800">
                 {brand.description}
               </p>
-            </Card>
+            </div>
 
-            {/* Gallery */}
-            {brand.images.length > 0 && (
-              <Card className="p-6">
-                <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {brand.images.map((image, index) => (
-                    <div
-                      key={index}
-                      className="relative aspect-video rounded-lg overflow-hidden"
-                    >
-                      <Image
-                        src={image}
-                        alt={`${brand.name} gallery image ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            )}
-
-            {/* Video Trailer */}
             {brand.trailer && (
               <Card className="p-6">
                 <h2 className="text-2xl font-semibold mb-4">Watch Our Story</h2>
@@ -145,12 +99,9 @@ export default function BrandPage({
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Quick Actions */}
             <BrandActions brand={brand} />
 
-            {/* Info Card */}
             <Card className="p-6">
               <h3 className="font-semibold mb-4">Information</h3>
               <div className="space-y-4">
@@ -178,7 +129,6 @@ export default function BrandPage({
               </div>
             </Card>
 
-            {/* Stats Card */}
             <Card className="p-6">
               <h3 className="font-semibold mb-4">Engagement</h3>
               <div className="grid grid-cols-3 gap-4 text-center">
