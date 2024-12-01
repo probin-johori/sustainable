@@ -170,7 +170,7 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
             e.stopPropagation();
             setIsFullscreen(true);
           }}
-          className="absolute right-4 bottom-8 flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-md hover:bg-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          className="absolute right-4 bottom-8 flex items-center gap-2 px-4 py-2 bg-white/90 rounded-full shadow-md hover:bg-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           <Grid className="w-4 h-4" />
           <span className="text-sm font-medium">Gallery</span>

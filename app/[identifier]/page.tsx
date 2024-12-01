@@ -5,18 +5,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sustainableBrands } from "@/lib/brands";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { BrandActions } from "./BrandActions";
 import { ImageGallery } from "@/components/ImageGallery";
 import { BrandHeader } from "@/components/BrandHeader";
 import BrandRating from "@/components/BrandRating";
 import {
   Calendar,
+  BookmarkPlus,
+  Share2,
   Mail,
   Phone,
-  BookmarkPlus,
-  Share2
+  Globe,
+  ShoppingBag,
+  Award,
+  Users
 } from "lucide-react";
 
 const slugify = (text: string) => {
@@ -36,7 +38,6 @@ type PageProps = {
 };
 
 export default function BrandPage({ params }: PageProps) {
-  const [searchQuery, setSearchQuery] = useState("");
   const { identifier } = use(params);
   const brand = getBrandByIdentifier(identifier);
 
@@ -89,52 +90,97 @@ export default function BrandPage({ params }: PageProps) {
                 {brand.description}
               </p>
             </div>
-
-            {brand.trailer && (
-              <Card className="p-6">
-                <h2 className="text-2xl font-semibold mb-4">Watch Our Story</h2>
-                <div className="relative aspect-video rounded-lg overflow-hidden">
-                  <iframe
-                    src={brand.trailer}
-                    className="absolute inset-0 w-full h-full"
-                    allowFullScreen
-                  />
-                </div>
-              </Card>
-            )}
           </div>
 
           <div className="space-y-6">
-            <BrandActions brand={brand} />
-
             <Card className="p-6">
-              <h3 className="font-semibold mb-4">Information</h3>
+              <h3 className="font-semibold mb-4">Quick Information</h3>
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Badge variant="outline" className="rounded-full">
-                    {brand.business}
-                  </Badge>
+                {/* Cofounders */}
+                <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <Users className="w-4 h-4 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-medium text-foreground mb-1">Cofounders</div>
+                    {brand.cofounders.map((cofounder, index) => (
+                      <div key={cofounder.name}>
+                        {cofounder.name}
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Launch Date */}
                 <div className="flex items-start gap-2 text-sm text-muted-foreground">
                   <Calendar className="w-4 h-4 mt-1 flex-shrink-0" />
-                  <span>Added on {new Date(brand.dateAdded).toLocaleDateString()}</span>
+                  <div>
+                    <div className="font-medium text-foreground mb-1">Launched</div>
+                    <div>{new Date(brand.businessStartDate).toLocaleDateString()}</div>
+                  </div>
                 </div>
+
+                {/* Product Range */}
                 <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <Phone className="w-4 h-4 mt-1 flex-shrink-0" />
-                  <Link 
-                    href={`tel:${brand.contact.phone}`} 
-                    className="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md p-1"
+                  <ShoppingBag className="w-4 h-4 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-medium text-foreground mb-1">Product Range</div>
+                    <div>{brand.productRange.join(", ")}</div>
+                  </div>
+                </div>
+
+                {/* Certifications */}
+                <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <Award className="w-4 h-4 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-medium text-foreground mb-1">Certifications</div>
+                    <div>{brand.certifications.join(", ")}</div>
+                  </div>
+                </div>
+
+                {/* Available On */}
+                <div className="space-y-2">
+                  <div className="font-medium text-sm">Available On</div>
+                  <div className="flex gap-4">
+                    {brand.availableOn.map((platform) => (
+                      <Link
+                        key={platform.name}
+                        href={platform.url}
+                        target="_blank"
+                        className="hover:opacity-80"
+                      >
+                        <Image
+                          src={`/logos/${platform.name.toLowerCase()}.svg`}
+                          alt={platform.name}
+                          width={24}
+                          height={24}
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Contact Info */}
+                <div className="space-y-2">
+                  <Link
+                    href={brand.url}
+                    target="_blank"
+                    className="flex items-center gap-2 text-sm text-primary hover:underline"
                   >
-                    {brand.contact.phone}
+                    <Globe className="w-4 h-4" />
+                    Visit Website
                   </Link>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <Mail className="w-4 h-4 mt-1 flex-shrink-0" />
-                  <Link 
-                    href={`mailto:${brand.contact.email}`} 
-                    className="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md p-1"
+                  <Link
+                    href={`mailto:${brand.contact.email}`}
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
                   >
+                    <Mail className="w-4 h-4" />
                     {brand.contact.email}
+                  </Link>
+                  <Link
+                    href={`tel:${brand.contact.phone}`}
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    <Phone className="w-4 h-4" />
+                    {brand.contact.phone}
                   </Link>
                 </div>
               </div>
@@ -142,19 +188,9 @@ export default function BrandPage({ params }: PageProps) {
 
             <Card className="p-6">
               <h3 className="font-semibold mb-4">Engagement</h3>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold">{brand.metrics.views.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground">Views</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold">{brand.metrics.likes.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground">Likes</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold">{brand.metrics.clicks.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground">Clicks</div>
-                </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">{brand.metrics.likes.toLocaleString()}</div>
+                <div className="text-sm text-muted-foreground">Likes</div>
               </div>
             </Card>
           </div>
