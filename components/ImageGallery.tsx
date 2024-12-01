@@ -65,6 +65,10 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isFullscreen) return;
       
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+      }
+      
       switch (e.key) {
         case 'ArrowRight':
           if (currentFullscreenIndex < images.length - 1) {
@@ -86,13 +90,15 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isFullscreen, currentFullscreenIndex, images.length]);
 
-  const showNextImage = () => {
+  const showNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (currentFullscreenIndex < images.length - 1) {
       setCurrentFullscreenIndex(currentFullscreenIndex + 1);
     }
   };
 
-  const showPreviousImage = () => {
+  const showPreviousImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (currentFullscreenIndex > 0) {
       setCurrentFullscreenIndex(currentFullscreenIndex - 1);
     }
@@ -116,7 +122,7 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
               className="relative flex-shrink-0 w-[45%] aspect-[3/2]"
             >
               <button 
-                className="w-full h-full relative group"
+                className="w-full h-full relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl"
                 onClick={() => {
                   setCurrentFullscreenIndex(index);
                   setIsFullscreen(true);
@@ -139,23 +145,32 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
 
         {showLeftChevron && (
           <button
-            onClick={() => scroll('left')}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              scroll('left');
+            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
         )}
         
         <button
-          onClick={() => scroll('right')}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            scroll('right');
+          }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           <ChevronRight className="h-6 w-6" />
         </button>
 
         <button
-          onClick={() => setIsFullscreen(true)}
-          className="absolute right-4 bottom-8 flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-md hover:bg-white transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsFullscreen(true);
+          }}
+          className="absolute right-4 bottom-8 flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-md hover:bg-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           <Grid className="w-4 h-4" />
           <span className="text-sm font-medium">Gallery</span>
@@ -163,15 +178,21 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
       </div>
 
       {isFullscreen && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex flex-col overflow-hidden">
+        <div 
+          className="fixed inset-0 bg-black/95 z-50 flex flex-col overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Header */}
           <div className="p-4 flex justify-between items-center">
             <span className="text-white/80 text-sm">
               {currentFullscreenIndex + 1} / {images.length}
             </span>
             <button
-              onClick={() => setIsFullscreen(false)}
-              className="p-2 rounded-full hover:bg-black/75"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFullscreen(false);
+              }}
+              className="p-2 rounded-full hover:bg-black/75 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               <X className="h-6 w-6 text-white" />
             </button>
@@ -183,7 +204,7 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
               {currentFullscreenIndex > 0 && (
                 <button
                   onClick={showPreviousImage}
-                  className="absolute left-8 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/75 z-10"
+                  className="absolute left-8 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/75 z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   <ChevronLeft className="h-8 w-8 text-white" />
                 </button>
@@ -213,7 +234,7 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
               {currentFullscreenIndex < images.length - 1 && (
                 <button
                   onClick={showNextImage}
-                  className="absolute right-8 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/75 z-10"
+                  className="absolute right-8 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/75 z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   <ChevronRight className="h-8 w-8 text-white" />
                 </button>
@@ -229,8 +250,11 @@ export function ImageGallery({ images, brandName }: ImageGalleryProps) {
                 {images.map((image, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentFullscreenIndex(index)}
-                    className={`relative h-16 aspect-square flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ${
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentFullscreenIndex(index);
+                    }}
+                    className={`relative h-16 aspect-square flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-800 ${
                       index === currentFullscreenIndex 
                         ? 'ring-2 ring-white ring-offset-2 ring-offset-neutral-800 scale-105' 
                         : 'opacity-70 hover:opacity-100'

@@ -1,4 +1,9 @@
 // Types for the sustainable brands dataset
+export interface BrandImage {
+  url: string;
+  description: string;
+}
+
 export interface SustainableBrand {
   id: string;
   name: string;
@@ -16,7 +21,7 @@ export interface SustainableBrand {
     views: number;
     likes: number;
   };
-  images: string[];
+  images: BrandImage[];
   trailer?: string;
   contact: {
     email: string;
@@ -73,12 +78,12 @@ export const sustainableBrands: SustainableBrand[] = [
   {
     id: "no-nasties",
     name: "No Nasties",
-    thumbnail: "/brands/no-nasties/thumbnail.jpg",
+    thumbnail: "/brandimages/no-nasties/thumbnail.jpg",
     imageUrl: "/banners/no-nasties.png",
     business: BusinessType.B2C,
     categories: [Category.CLOTHING],
     shortDescription: "Planet-positive fashion brand turning every purchase into climate action through 300% carbon offset and tree planting",
-    description: `No Nasties is a revolutionary eco-conscious fashion brand that goes beyond sustainability to create a positive impact on our planet. Their unique approach combines 100% organic cotton, local supply chains, and a triple carbon offset strategy that removes more CO2 than their products create. For every purchase, they plant 3 trees, contributing to their Mission Million goal of planting one million trees by 2030. Through their "Planet Positive" commitment, they transform everyday fashion choices into meaningful climate action, proving that style and environmental responsibility can go hand in hand. With their motto "Don't Panic. It's 100% Organic," No Nasties demonstrates that fashion can be both ethical and impactful.`,
+    description: `No Nasties is a revolutionary eco-conscious fashion brand that goes beyond sustainability to create a positive impact on our planet. Their unique approach combines 100% organic cotton, local supply chains, and a triple carbon offset strategy that removes more CO2 than their products create. For every purchase, they plant 3 trees, contributing to their Mission Million goal of planting one million trees by 2030.`,
     url: "https://nonasties.in",
     themeColor: "#2E7D32",
     dateAdded: "2024-01-15",
@@ -88,9 +93,18 @@ export const sustainableBrands: SustainableBrand[] = [
       likes: 850
     },
     images: [
-      "/brands/no-nasties/CloudSleepShorts4.webp",
-      "/brands/no-nasties/StarlitNightShirt2.webp",
-      "/brands/no-nasties/BlissSleepShorts1.webp"
+      {
+        url: "/brandimages/no-nasties/CloudSleepShorts4.webp",
+        description: "Cloud Sleep Shorts - Crafted from 100% organic cotton, these comfortable sleep shorts feature our signature cloud-soft fabric. Each pair contributes to our triple carbon offset initiative."
+      },
+      {
+        url: "/brandimages/no-nasties/StarlitNightShirt2.webp",
+        description: "Starlit Night Shirt - A sustainable sleepwear essential made with eco-conscious materials. This night shirt is part of our carbon-neutral collection, supporting local artisans."
+      },
+      {
+        url: "/brandimages/no-nasties/BlissSleepShorts1.webp",
+        description: "Bliss Sleep Shorts - Ethically produced sleepwear featuring our breathable organic cotton. Every purchase of these shorts contributes to planting three trees as part of our Mission Million initiative."
+      }
     ],
     trailer: "https://youtube.com/nonasties-story",
     contact: {
@@ -108,16 +122,13 @@ export const sustainableBrands: SustainableBrand[] = [
   {
     id: "ooo-farms",
     name: "Ooo Farms",
-    thumbnail: "/brands/ooo-farms/thumbnail.jpg",
+    thumbnail: "/brandimages/ooo-farms/thumbnail.jpg",
     imageUrl: "/banners/ooo-farms.png",
     business: BusinessType.B2C,
     categories: [Category.FOOD],
-    shortDescription: "Eco-friendly home products and packaging solutions",
-    description: `Earthly Goods is a Mumbai-based sustainable brand focusing on home products 
-    and packaging solutions. They create alternatives to single-use plastics using bamboo, 
-    coconut fiber, and other biodegradable materials. Their product range includes kitchen items, 
-    bathroom accessories, and innovative packaging solutions for businesses.`,
-    url: "https://earthlygoods.co.in",
+    shortDescription: "Sustainable agriculture and organic farming initiative promoting local biodiversity",
+    description: `Ooo Farms leads sustainable agriculture practices while preserving local biodiversity. They work directly with small-scale farmers to maintain traditional farming methods and protect indigenous crop varieties. Their community-supported agriculture program connects consumers directly with local farmers.`,
+    url: "https://ooofarms.org",
     themeColor: "#8D6E63",
     dateAdded: "2023-11-20",
     metrics: {
@@ -126,172 +137,206 @@ export const sustainableBrands: SustainableBrand[] = [
       likes: 1200
     },
     images: [
-      "/brands/earthlygoods/products.jpg",
-      "/brands/earthlygoods/packaging.jpg",
-      "/brands/earthlygoods/materials.jpg"
+      {
+        url: "/brandimages/ooo-farms/farm1.jpg",
+        description: "Our organic farm during harvest season, showcasing sustainable farming practices and diverse crop cultivation. This field demonstrates our commitment to maintaining soil health and biodiversity."
+      },
+      {
+        url: "/brandimages/ooo-farms/produce.jpg",
+        description: "Fresh organic produce harvested from our farms. Every vegetable is grown without chemical pesticides and fertilizers, ensuring the highest quality and nutritional value."
+      },
+      {
+        url: "/brandimages/ooo-farms/farmers.jpg",
+        description: "Local farmers implementing traditional and sustainable farming methods. Our partnership with these farmers helps preserve indigenous agricultural knowledge and promotes fair trade practices."
+      }
     ],
-    trailer: "https://youtube.com/earthlygoods-impact",
+    trailer: "https://youtube.com/ooo-farms-story",
     contact: {
-      email: "care@earthlygoods.co.in",
+      email: "connect@ooofarms.org",
       phone: "+91-9876543211"
-    },
-    sustainabilityRatings: {
-      environmental: 4.6,
-      social: 4.3,
-      ethical: 4.5,
-      durability: 4.4,
-      innovation: 4.2
-    }
-  },
-  {
-    id: "the-summer-house",
-    name: "The Summer House",
-    thumbnail: "/brands/the-summer-house/thumbnail.jpg",
-    imageUrl: "/banners/the-summer-house.png",
-    business: BusinessType.B2C,
-    categories: [Category.CLOTHING],
-    shortDescription: "Ayurvedic clothing and wellness textiles",
-    description: `Ayurvastra combines ancient Ayurvedic wisdom with modern sustainable fashion. 
-    Based in Kerala, they create clothing infused with medicinal herbs using traditional dyeing 
-    processes. Their products are completely organic and biodegradable, offering therapeutic 
-    benefits while being environmentally conscious.`,
-    url: "https://ayurvastra.in",
-    themeColor: "#5D4037",
-    dateAdded: "2024-02-01",
-    metrics: {
-      clicks: 980,
-      views: 3200,
-      likes: 645
-    },
-    images: [
-      "/brands/ayurvastra/clothing.jpg",
-      "/brands/ayurvastra/process.jpg",
-      "/brands/ayurvastra/herbs.jpg"
-    ],
-    trailer: "https://youtube.com/ayurvastra-healing-fashion",
-    contact: {
-      email: "connect@ayurvastra.in",
-      phone: "+91-9876543212"
-    },
-    sustainabilityRatings: {
-      environmental: 4.7,
-      social: 4.4,
-      ethical: 4.6,
-      durability: 4.3,
-      innovation: 4.5
-    }
-  },
-  {
-    id: "the-herb-botique",
-    name: "The Herb Botique",
-    thumbnail: "/brands/the-herb-botique/thumbnail.jpg",
-    imageUrl: "/banners/the-herb-botique.png",
-    business: BusinessType.BOTH,
-    categories: [Category.HOME, Category.HEALTH, Category.FOOD],
-    shortDescription: "Natural and organic personal care products",
-    description: `Green Nest creates natural and organic personal care products using traditional 
-    Indian ingredients. Their range includes skincare, haircare, and wellness products made from 
-    locally sourced ingredients. They work directly with organic farmers and ensure sustainable 
-    packaging for all their products.`,
-    url: "https://greennest.in",
-    themeColor: "#558B2F",
-    dateAdded: "2023-12-10",
-    metrics: {
-      clicks: 1750,
-      views: 6800,
-      likes: 925
-    },
-    images: [
-      "/brands/greennest/products.jpg",
-      "/brands/greennest/ingredients.jpg",
-      "/brands/greennest/packaging.jpg"
-    ],
-    trailer: "https://youtube.com/greennest-natural-beauty",
-    contact: {
-      email: "care@greennest.in",
-      phone: "+91-9876543213"
-    },
-    sustainabilityRatings: {
-      environmental: 4.5,
-      social: 4.6,
-      ethical: 4.7,
-      durability: 4.1,
-      innovation: 4.4
-    }
-  },
-  {
-    id: "i-was-a-saree",
-    name: "I was a saree",
-    thumbnail: "/brands/i-was-a-saree/thumbnail.jpg",
-    imageUrl: "/banners/i-was-a-saree.png",
-    business: BusinessType.B2C,
-    categories: [Category.CLOTHING],
-    shortDescription: "Sustainable food products and zero-waste grocery",
-    description: `EcoFeast is revolutionizing the grocery shopping experience in Delhi with their 
-    zero-waste stores and organic food products. They source directly from organic farmers and 
-    sell products in plastic-free packaging. Their stores feature refill stations and encourage 
-    customers to bring their own containers.`,
-    url: "https://ecofeast.in",
-    themeColor: "#689F38",
-    dateAdded: "2024-01-05",
-    metrics: {
-      clicks: 3200,
-      views: 12000,
-      likes: 2100
-    },
-    images: [
-      "/brands/ecofeast/store.jpg",
-      "/brands/ecofeast/products.jpg",
-      "/brands/ecofeast/farmers.jpg"
-    ],
-    trailer: "https://youtube.com/ecofeast-zerowaste",
-    contact: {
-      email: "hello@ecofeast.in",
-      phone: "+91-9876543214"
     },
     sustainabilityRatings: {
       environmental: 4.9,
       social: 4.7,
       ethical: 4.8,
+      durability: 4.6,
+      innovation: 4.5
+    }
+  },
+  {
+    id: "the-summer-house",
+    name: "The Summer House",
+    thumbnail: "/brandimages/summer-house/thumbnail.jpg",
+    imageUrl: "/banners/the-summer-house.png",
+    business: BusinessType.B2C,
+    categories: [Category.CLOTHING, Category.HOME],
+    shortDescription: "Sustainable fashion and lifestyle brand creating timeless pieces with natural materials",
+    description: `The Summer House creates sustainable fashion and home accessories that stand the test of time. Using natural fabrics and traditional craftsmanship, they produce clothing and home items that are both beautiful and environmentally responsible.`,
+    url: "https://thesummerhouse.in",
+    themeColor: "#5D4037",
+    dateAdded: "2024-02-01",
+    metrics: {
+      clicks: 1980,
+      views: 6200,
+      likes: 945
+    },
+    images: [
+      {
+        url: "/brandimages/summer-house/dress1.jpg",
+        description: "Handcrafted organic cotton dress featuring natural dyes and traditional textile techniques. This piece represents our commitment to sustainable fashion and timeless design."
+      },
+      {
+        url: "/brandimages/summer-house/home1.jpg",
+        description: "Sustainable home collection made from natural materials. Each piece is carefully crafted to combine functionality with environmental consciousness."
+      },
+      {
+        url: "/brandimages/summer-house/artisans.jpg",
+        description: "Our skilled artisans at work, preserving traditional craftsmanship while creating contemporary designs. Their expertise ensures each piece meets our high standards of quality and sustainability."
+      }
+    ],
+    trailer: "https://youtube.com/summerhouse-story",
+    contact: {
+      email: "hello@thesummerhouse.in",
+      phone: "+91-9876543212"
+    },
+    sustainabilityRatings: {
+      environmental: 4.7,
+      social: 4.8,
+      ethical: 4.9,
       durability: 4.5,
-      innovation: 4.7
+      innovation: 4.6
+    }
+  },
+  {
+    id: "the-herb-boutique",
+    name: "The Herb Boutique",
+    thumbnail: "/brandimages/the-herb-boutique/thumbnail.jpg",
+    imageUrl: "/banners/the-herb-boutique.png",
+    business: BusinessType.BOTH,
+    categories: [Category.BEAUTY, Category.HEALTH],
+    shortDescription: "Organic skincare and wellness products made from traditional herbs",
+    description: `The Herb Boutique creates natural skincare and wellness products using traditional herbal knowledge and modern science. Their products combine ancient Ayurvedic wisdom with contemporary research to deliver effective, chemical-free solutions.`,
+    url: "https://herbboutique.in",
+    themeColor: "#558B2F",
+    dateAdded: "2023-12-10",
+    metrics: {
+      clicks: 3150,
+      views: 9800,
+      likes: 1625
+    },
+    images: [
+      {
+        url: "/brandimages/herb-boutique/products1.jpg",
+        description: "Our signature range of organic skincare products, featuring carefully selected herbs and natural ingredients. Each product is formulated to provide effective, chemical-free skincare solutions."
+      },
+      {
+        url: "/brandimages/herb-boutique/herbs.jpg",
+        description: "Fresh herbs from our organic garden used in our products. We grow and harvest our own herbs to ensure the highest quality and potency in our formulations."
+      },
+      {
+        url: "/brandimages/herb-boutique/process.jpg",
+        description: "Our natural product creation process, combining traditional knowledge with modern techniques. This careful approach ensures both effectiveness and sustainability in our products."
+      }
+    ],
+    trailer: "https://youtube.com/herb-boutique-story",
+    contact: {
+      email: "care@herbboutique.in",
+      phone: "+91-9876543213"
+    },
+    sustainabilityRatings: {
+      environmental: 4.8,
+      social: 4.6,
+      ethical: 4.7,
+      durability: 4.4,
+      innovation: 4.5
+    }
+  },
+  {
+    id: "i-was-a-saree",
+    name: "I Was A Saree",
+    thumbnail: "/brandimages/i-was-a-saree/thumbnail.jpg",
+    imageUrl: "/banners/i-was-a-saree.png",
+    business: BusinessType.B2C,
+    categories: [Category.CLOTHING, Category.ACCESSORIES],
+    shortDescription: "Upcycled fashion brand transforming pre-loved saris into contemporary designs",
+    description: `I Was A Sari gives new life to pre-loved saris by transforming them into contemporary fashion pieces. This innovative approach to sustainable fashion combines traditional Indian textiles with modern design while providing employment to local artisans.`,
+    url: "https://iwasasaree.com",
+    themeColor: "#689F38",
+    dateAdded: "2024-01-05",
+    metrics: {
+      clicks: 2800,
+      views: 7500,
+      likes: 1450
+    },
+    images: [
+      {
+        url: "/brandimages/i-was-a-saree/collection1.jpg",
+        description: "Our latest collection of upcycled fashion pieces, each created from pre-loved saris. Every item tells a unique story while contributing to sustainable fashion."
+      },
+      {
+        url: "/brandimages/i-was-a-saree/workshop.jpg",
+        description: "Our workshop where skilled artisans transform vintage saris into contemporary fashion pieces. This process combines traditional craftsmanship with modern design."
+      },
+      {
+        url: "/brandimages/i-was-a-saree/accessories.jpg",
+        description: "Handcrafted accessories made from upcycled sari fabrics. Each piece is unique and demonstrates our commitment to zero-waste fashion."
+      }
+    ],
+    trailer: "https://youtube.com/iwasasaree-story",
+    contact: {
+      email: "hello@iwasasari.com",
+      phone: "+91-9876543214"
+    },
+    sustainabilityRatings: {
+      environmental: 4.9,
+      social: 4.8,
+      ethical: 4.7,
+      durability: 4.5,
+      innovation: 4.8
     }
   },
   {
     id: "iro-iro",
     name: "Iro Iro",
-    thumbnail: "/brands/iro-iro/thumbnail.jpg",
+    thumbnail: "/brandimages/iro-iro/thumbnail.jpg",
     imageUrl: "/banners/iro-iro.png",
     business: BusinessType.B2C,
     categories: [Category.CLOTHING],
-    shortDescription: "Sustainable clothing and home accessories",
-    description: `TheSummerHouse creates sustainable fashion and home accessories with a focus on 
-    timeless design and ethical production. They work with local artisans and use eco-friendly 
-    materials to create their collections.`,
-    url: "https://thesummerhouse.in",
+    shortDescription: "Zero-waste fashion brand creating colorful designs from textile waste",
+    description: `Iro Iro is revolutionizing sustainable fashion by transforming textile waste into vibrant, contemporary clothing. Their zero-waste approach combines innovative design techniques with environmental responsibility.`,
+    url: "https://iroiro.in",
     themeColor: "#689F38",
     dateAdded: "2024-01-05",
     metrics: {
-      clicks: 3200,
-      views: 12000,
-      likes: 2100
+      clicks: 2100,
+      views: 6800,
+      likes: 1350
     },
     images: [
-      "/brands/thesummerhouse/store.jpg",
-      "/brands/thesummerhouse/products.jpg",
-      "/brands/thesummerhouse/process.jpg"
+      {
+        url: "/brandimages/iro-iro/collection1.jpg",
+        description: "Our latest zero-waste collection featuring vibrant designs made from recycled textiles. Each piece demonstrates how sustainable fashion can be both colorful and environmentally responsible."
+      },
+      {
+        url: "/brandimages/iro-iro/process.jpg",
+        description: "Our innovative sorting and design process, where textile waste is transformed into fashion. This showcases our commitment to circular fashion and waste reduction."
+      },
+      {
+        url: "/brandimages/iro-iro/studio.jpg",
+        description: "Inside our design studio where we create zero-waste patterns and sustainable fashion pieces. Our workspace reflects our commitment to creativity and environmental consciousness."
+      }
     ],
-    trailer: "https://youtube.com/thesummerhouse-story",
+    trailer: "https://youtube.com/iroiro-fashion",
     contact: {
-      email: "hello@thesummerhouse.in",
+      email: "hello@iroiro.in",
       phone: "+91-9876543215"
     },
     sustainabilityRatings: {
-      environmental: 4.4,
-      social: 4.8,
-      ethical: 4.6,
-      durability: 4.3,
-      innovation: 4.5
+      environmental: 4.9,
+      social: 4.6,
+      ethical: 4.7,
+      durability: 4.4,
+      innovation: 4.8
     }
   }
 ];

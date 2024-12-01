@@ -80,7 +80,10 @@ export function Header({
       <div className="px-2 sm:px-20">
         <div className="h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 h-8">
-            <Link href="/" className="flex items-center gap-2">
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 p-1"
+            >
               <div className="relative w-8 h-8">
                 <Image
                   src={`/logos/sustainable-brands.png`}
@@ -106,7 +109,7 @@ export function Header({
               {(searchQuery || showDropdown) && (
                 <button
                   onClick={handleClearSearch}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-neutral-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C6832] focus-visible:ring-offset-2"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-neutral-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   <X className="h-4 w-4 text-gray-500" />
                 </button>
@@ -119,8 +122,8 @@ export function Header({
                 >
                   {searchResults.length > 0 ? (
                     <>
-                      <div className="pt-4 px-4">
-                        <span className="text-[12px] text-gray-700 block mb-0">
+                      <div className="pt-2 pb-2 px-4">
+                        <span className="text-[12px] text-gray-600 block mb-0">
                           {searchQuery ? 'Search result' : 'Top Sustainable Brands'}
                         </span>
                       </div>
@@ -129,7 +132,7 @@ export function Header({
                           <Link 
                             href={`/${slugify(brand.name)}`}
                             key={brand.id}
-                            className={`flex items-center gap-3 p-2 cursor-pointer rounded-md hover:bg-neutral-100 ${index === 0 && !showHover ? 'bg-neutral-100' : ''} focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C6832] focus-visible:ring-offset-2`}
+                            className={`flex items-center gap-3 p-2 cursor-pointer rounded-md hover:bg-neutral-100 ${index === 0 && !showHover ? 'bg-neutral-100' : ''} focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`}
                             onClick={() => setShowDropdown(false)}
                             onMouseEnter={() => setShowHover(true)}
                             onMouseLeave={() => setShowHover(false)}
@@ -149,7 +152,7 @@ export function Header({
                     </>
                   ) : (
                     <div className="h-full flex items-center justify-center">
-                      <span className="text-gray-500">No brand found</span>
+                      <span className="text-gray-500 text-sm">No brand found</span>
                     </div>
                   )}
                 </div>
@@ -165,7 +168,7 @@ export function Header({
             <Button 
               variant="ghost" 
               size="icon" 
-              className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C6832] focus-visible:ring-offset-2"
+              className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <Menu className="h-5 w-5" />
             </Button>

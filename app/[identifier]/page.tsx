@@ -1,6 +1,6 @@
 'use client'
 
-import { Metadata } from "next";
+import { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -29,10 +29,15 @@ const getBrandByIdentifier = (identifier: string) => {
   );
 };
 
-type PageParams = { params: { identifier: string } };
+type PageProps = {
+  params: Promise<{
+    identifier: string
+  }>
+};
 
-export default function BrandPage({ params }: PageParams) {
-  const { identifier } = params;
+export default function BrandPage({ params }: PageProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { identifier } = use(params);
   const brand = getBrandByIdentifier(identifier);
 
   if (!brand) {
@@ -41,26 +46,26 @@ export default function BrandPage({ params }: PageParams) {
 
   return (
     <div className="min-h-screen bg-white">
-      <BrandHeader searchQuery={""} onSearchChange={function (value: string): void {
-        throw new Error("Function not implemented.");
-      } } />
+      <BrandHeader />
 
       <div className="pt-24 pb-16">
         <div className="flex justify-between mb-8 px-2 sm:px-40">
           <div>
             <h1 className="text-4xl font-bold text-left" style={{ color: '#163400' }}>{brand.name}</h1>
             <div className="mt-0">
-              {brand.categories.map((category) => (
-                <span key={category} className="mr-2 text-gray-600">{category}</span>
+              {brand.categories.map((category, index) => (
+                <span key={category} className="text-gray-600">
+                  {category}{index < brand.categories.length - 1 ? ", " : ""}
+                </span>
               ))}
             </div>
           </div>
           <div className="flex items-center gap-6 translate-y-4">
-            <button className="flex items-center gap-2 text-sm hover:text-gray-600">
+            <button className="flex items-center gap-2 text-sm hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg p-2">
               <BookmarkPlus className="w-4 h-4" />
               <span className="text-sm">Save</span>
             </button>
-            <button className="flex items-center gap-2 text-sm hover:text-gray-600">
+            <button className="flex items-center gap-2 text-sm hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg p-2">
               <Share2 className="w-4 h-4" />
               <span className="text-sm">Share</span>
             </button>
@@ -116,13 +121,19 @@ export default function BrandPage({ params }: PageParams) {
                 </div>
                 <div className="flex items-start gap-2 text-sm text-muted-foreground">
                   <Phone className="w-4 h-4 mt-1 flex-shrink-0" />
-                  <Link href={`tel:${brand.contact.phone}`} className="hover:underline">
+                  <Link 
+                    href={`tel:${brand.contact.phone}`} 
+                    className="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md p-1"
+                  >
                     {brand.contact.phone}
                   </Link>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-muted-foreground">
                   <Mail className="w-4 h-4 mt-1 flex-shrink-0" />
-                  <Link href={`mailto:${brand.contact.email}`} className="hover:underline">
+                  <Link 
+                    href={`mailto:${brand.contact.email}`} 
+                    className="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md p-1"
+                  >
                     {brand.contact.email}
                   </Link>
                 </div>

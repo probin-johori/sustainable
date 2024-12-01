@@ -3,14 +3,12 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Header } from "@/components/Header";
+import { useRouter } from 'next/navigation';
 
-interface BrandHeaderProps {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-}
-
-export function BrandHeader({ searchQuery, onSearchChange }: BrandHeaderProps) {
+export function BrandHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,10 +19,14 @@ export function BrandHeader({ searchQuery, onSearchChange }: BrandHeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
   return (
     <Header
       searchQuery={searchQuery}
-      onSearchChange={onSearchChange}
+      onSearchChange={handleSearchChange}
       className={`fixed top-0 left-0 right-0 bg-white z-50 ${isScrolled ? 'shadow-sm' : ''}`}
     />
   );
