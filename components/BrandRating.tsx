@@ -21,7 +21,10 @@ const BrandRating: React.FC<RatingProps> = ({ ratings }) => {
   return (
     <div className="py-8">
       <div className="text-center mb-12">
-        <span className="text-6xl font-bold" style={{ color: '#163400' }}>{average.toFixed(2)}</span>
+        <div className="flex items-center justify-center">
+          <span className="text-6xl font-bold" style={{ color: '#163400' }}>{average.toFixed(2)}</span>
+          <span className="text-md font-medium text-neutral-600 ml-1">/5</span>
+        </div>
         <h3 className="text-xl font-semibold text-gray-900 mt-2">Sustainability Score</h3>
         <p className="text-sm text-gray-600 mt-0">
           Top 10% of sustainable brands
@@ -33,7 +36,10 @@ const BrandRating: React.FC<RatingProps> = ({ ratings }) => {
           <React.Fragment key={id}>
             <div className="flex-1 flex flex-col items-center text-center">
               <div className="text-sm" style={{ color: '#163400' }}>{name}</div>
-              <div className="text-lg font-bold mb-8 mt-1" style={{ color: '#163400' }}>{ratings[id]}</div>
+              <div className="flex items-center mt-1 mb-8">
+                <span className="text-lg font-bold" style={{ color: '#163400' }}>{ratings[id]}</span>
+                <span className="text-neutral-600 text-sm font-medium ml-1">/5</span>
+              </div>
               <Icon className="w-8 h-8" style={{ color: '#163400' }} />
             </div>
             {index < metrics.length - 1 && (
