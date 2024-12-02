@@ -19,6 +19,7 @@ const slugify = (text: string) => {
 
 export const BrandCard = ({ brand }: BrandCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [imageError, setImageError] = useState(false);
   
   const logoPath = `/logos/${slugify(brand.name)}.png`;
   const detailsPath = `/${slugify(brand.name)}`;
@@ -32,7 +33,7 @@ export const BrandCard = ({ brand }: BrandCardProps) => {
         <Card className="relative rounded-xl border-0 overflow-hidden">
           <div className="relative w-full pt-[100%]">
             <div className="absolute inset-0 w-full h-full" style={{ backgroundColor: '#F4F3E8' }}>
-              {brand.imageUrl && (
+              {brand.imageUrl && !imageError ? (
                 <Image
                   src={brand.imageUrl}
                   alt={`${brand.name} banner`}
@@ -41,7 +42,12 @@ export const BrandCard = ({ brand }: BrandCardProps) => {
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover"
+                  onError={() => setImageError(true)}
                 />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-neutral-100">
+                  <span className="text-neutral-400">{brand.name}</span>
+                </div>
               )}
             </div>
             
@@ -55,13 +61,17 @@ export const BrandCard = ({ brand }: BrandCardProps) => {
                   isFlipped ? 'opacity-0' : 'opacity-100'
                 }`}>
                   <div className="flex items-center justify-center p-2 gap-2">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-neutral-100 rounded-full">
                       <Image
                         src={logoPath}
                         alt={`${brand.name} logo`}
                         width={40}
                         height={40}
                         className="object-contain"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                        }}
                       />
                     </div>
                     

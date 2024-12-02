@@ -80,10 +80,7 @@ export function Header({
       <div className="px-2 sm:px-20">
         <div className="h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 h-8">
-            <Link 
-              href="/" 
-              className="flex items-center gap-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 p-1"
-            >
+            <Link href="/" className="flex items-center gap-2">
               <div className="relative w-8 h-8">
                 <Image
                   src={`/logos/sustainable-brands.png`}
@@ -132,7 +129,7 @@ export function Header({
                           <Link 
                             href={`/${slugify(brand.name)}`}
                             key={brand.id}
-                            className={`flex items-center gap-3 p-2 cursor-pointer rounded-md hover:bg-neutral-100 ${index === 0 && !showHover ? 'bg-neutral-100' : ''} focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`}
+                            className={`flex items-center gap-3 p-2 cursor-pointer rounded-md hover:bg-neutral-100 ${index === 0 && !showHover ? 'bg-neutral-100' : ''} focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C6832] focus-visible:ring-offset-2`}
                             onClick={() => setShowDropdown(false)}
                             onMouseEnter={() => setShowHover(true)}
                             onMouseLeave={() => setShowHover(false)}
@@ -168,7 +165,7 @@ export function Header({
             <Button 
               variant="ghost" 
               size="icon" 
-              className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C6832] focus-visible:ring-offset-2"
             >
               <Menu className="h-5 w-5" />
             </Button>

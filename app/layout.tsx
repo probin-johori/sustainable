@@ -42,7 +42,6 @@ export default function RootLayout({
         className={`${bricolage.variable} ${geistMono.variable} ${geist.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <main className="flex-1">
-          {children}
         </main>
         <Footer />
       </body>

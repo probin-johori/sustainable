@@ -1,12 +1,68 @@
+import { ReactNode } from "react";
+
 // Types for the sustainable brands dataset
 export interface BrandImage {
   url: string;
   description: string;
 }
 
-export interface Cofounder {
+export interface Founder {
+  role: ReactNode;
   name: string;
-  imageUrl?: string;
+  imageUrl: string;
+}
+
+export interface Designer {
+  description: string;
+  location?: string;
+}
+
+export interface BrandOrigin {
+  city: string;
+  country: string;
+}
+
+export interface BrandContent {
+  about: string;
+  impact: string;
+}
+
+export enum Marketplace {
+  AMAZON = "Amazon",
+  FLIPKART = "Flipkart",
+  WALMART = "Walmart",
+  MEESHO = "Meesho",
+  SWIFT = "Swift",
+  TATA_CLIQ = "Tata CLiQ",
+  MYNTRA = "Myntra",
+  SNAPDEAL = "Snapdeal",
+  PAYTM_MALL = "Paytm Mall"
+}
+
+// Helper function to get marketplace base URLs
+export const getMarketplaceBaseUrl = (marketplace: Marketplace): string => {
+  const urlMap: Record<Marketplace, string> = {
+    [Marketplace.AMAZON]: "https://www.amazon.in",
+    [Marketplace.FLIPKART]: "https://www.flipkart.com",
+    [Marketplace.WALMART]: "https://www.walmart.com",
+    [Marketplace.MEESHO]: "https://www.meesho.com",
+    [Marketplace.SWIFT]: "https://www.swift.com",
+    [Marketplace.TATA_CLIQ]: "https://www.tatacliq.com",
+    [Marketplace.MYNTRA]: "https://www.myntra.com",
+    [Marketplace.SNAPDEAL]: "https://www.snapdeal.com",
+    [Marketplace.PAYTM_MALL]: "https://paytmmall.com"
+  };
+  return urlMap[marketplace];
+};
+
+// Helper function to get logo filename
+export const getMarketplaceLogo = (marketplace: Marketplace): string => {
+  return `/logos/${marketplace.toLowerCase().replace(/ /g, '-')}.svg`;
+};
+
+export interface MarketplaceAvailability {
+  marketplace: Marketplace;
+  url: string;
 }
 
 export interface SustainableBrand {
@@ -15,8 +71,7 @@ export interface SustainableBrand {
   thumbnail: string;
   imageUrl: string;
   categories: Category[];
-  shortDescription: string;
-  description: string;
+  content: BrandContent;
   url: string;
   themeColor: string;
   businessStartDate: string;
@@ -24,17 +79,17 @@ export interface SustainableBrand {
     likes: number;
   };
   images: BrandImage[];
-  cofounders: Cofounder[];
+  founder: Founder[];
+  designer?: Designer;
+  brandTrailerUrl?: string;
   productRange: string[];
   certifications: string[];
-  availableOn: {
-    name: string;
-    url: string;
-  }[];
+  availableOn: MarketplaceAvailability[];
   contact: {
     email: string;
     phone: string;
   };
+  origin: BrandOrigin;
   sustainabilityRatings: {
     environmental: number;
     social: number;
@@ -44,7 +99,6 @@ export interface SustainableBrand {
   };
 }
 
-// Enum for categories - aligned with QuickFilter
 export enum Category {
   CLOTHING = "Clothing",
   ACCESSORIES = "Accessories",
@@ -74,7 +128,6 @@ export enum Category {
   CLEANING = "Cleaning"
 }
 
-// Dataset of sustainable brands
 export const sustainableBrands: SustainableBrand[] = [
   {
     id: "no-nasties",
@@ -82,29 +135,39 @@ export const sustainableBrands: SustainableBrand[] = [
     thumbnail: "/brandimages/no-nasties/thumbnail.jpg",
     imageUrl: "/banners/no-nasties.png",
     categories: [Category.CLOTHING],
-    shortDescription: "Planet-positive fashion brand turning every purchase into climate action through 300% carbon offset and tree planting",
-    description: `No Nasties is a revolutionary eco-conscious fashion brand that goes beyond sustainability to create a positive impact on our planet. Their unique approach combines 100% organic cotton, local supply chains, and a triple carbon offset strategy that removes more CO2 than their products create. For every purchase, they plant 3 trees, contributing to their Mission Million goal of planting one million trees by 2030.`,
+    content: {
+      about: "No Nasties is a revolutionary eco-conscious fashion brand that goes beyond sustainability to create a positive impact on our planet. Their unique approach combines 100% organic cotton, local supply chains, and a triple carbon offset strategy that removes more CO2 than their products create. For every purchase, they plant 3 trees, contributing to their Mission Million goal of planting one million trees by 2030.",
+      impact: "Since 2011, No Nasties has made 100% organic, fair trade, vegan clothing, serving 25K customers across 64 countries. They've saved over 37.7M+ liters of water, offset 697,745 kg CO2e, and planted 189,027 trees. Every product removes more CO2 than it creates through their 300% offset strategy and 3 trees planting initiative. Their commitment extends to plastic-free packaging and carbon-neutral shipping, making them India's most sustainable fashion brand."
+    },
     url: "https://nonasties.in",
     themeColor: "#2E7D32",
-    businessStartDate: "2011-05-15",
-    cofounders: [
+    businessStartDate: "2011",
+    designer: {
+      description: "All-women design team",
+      location: "Goa"
+    },
+    brandTrailerUrl: "https://vimeo.com/193521522",
+    founder: [
       {
-        name: "Apurva Kothari"
-      },
-      {
-        name: "Diti Kothari"
+        name: "Apurva Kothari",
+        role: "Founder",
+        imageUrl: "/brandimages/no-nasties/founder.jpg"
       }
     ],
     productRange: ["T-shirts", "Dresses", "Pajamas", "Loungewear", "Kids Wear"],
     certifications: ["GOTS Certified", "Fair Trade Certified", "Vegan Certified"],
     availableOn: [
-      {
-        name: "Amazon",
-        url: "https://amazon.com/no-nasties"
+      { 
+        marketplace: Marketplace.AMAZON,
+        url: "https://www.amazon.in/stores/NoNasties/page/5B0BEF85-3D49-4970-AD76-5B8C84F956F6"
       },
-      {
-        name: "Flipkart",
-        url: "https://flipkart.com/no-nasties"
+      { 
+        marketplace: Marketplace.FLIPKART,
+        url: "https://www.flipkart.com/no-nasties-store"
+      },
+      { 
+        marketplace: Marketplace.MYNTRA,
+        url: "https://www.myntra.com/no-nasties"
       }
     ],
     metrics: {
@@ -125,257 +188,19 @@ export const sustainableBrands: SustainableBrand[] = [
       }
     ],
     contact: {
-      email: "hello@nonasties.in",
-      phone: "+91-9876543210"
+      email: "betty@nonasties.in",
+      phone: "+91-98852-83889"
+    },
+    origin: {
+      city: "Goa",
+      country: "India"
     },
     sustainabilityRatings: {
-      environmental: 4.8,
+      environmental: 4.2,
       social: 4.5,
       ethical: 4.7,
       durability: 4.2,
       innovation: 4.6
     }
-  },
-  {
-    id: "ooo-farms",
-    name: "Ooo Farms",
-    thumbnail: "/brandimages/ooo-farms/thumbnail.jpg",
-    imageUrl: "/banners/ooo-farms.png",
-    categories: [Category.FOOD],
-    shortDescription: "Sustainable agriculture and organic farming initiative promoting local biodiversity",
-    description: `Ooo Farms leads sustainable agriculture practices while preserving local biodiversity. They work directly with small-scale farmers to maintain traditional farming methods and protect indigenous crop varieties. Their community-supported agriculture program connects consumers directly with local farmers.`,
-    url: "https://ooofarms.org",
-    themeColor: "#8D6E63",
-    businessStartDate: "2015-08-20",
-    cofounders: [
-      {
-        name: "Rahul Sharma"
-      },
-      {
-        name: "Priya Patel"
-      }
-    ],
-    productRange: ["Organic Vegetables", "Indigenous Grains", "Seasonal Fruits", "Organic Seeds", "Farm Fresh Herbs"],
-    certifications: ["Organic Certified", "Non-GMO Verified", "Biodiversity Alliance Certified"],
-    availableOn: [
-      {
-        name: "Amazon",
-        url: "https://amazon.com/ooo-farms"
-      },
-      {
-        name: "BigBasket",
-        url: "https://bigbasket.com/ooo-farms"
-      }
-    ],
-    metrics: {
-      likes: 1200
-    },
-    images: [
-      {
-        url: "/brandimages/ooo-farms/farm1.jpg",
-        description: "Our organic farm during harvest season, showcasing sustainable farming practices and diverse crop cultivation. This field demonstrates our commitment to maintaining soil health and biodiversity."
-      },
-      {
-        url: "/brandimages/ooo-farms/produce.jpg",
-        description: "Fresh organic produce harvested from our farms. Every vegetable is grown without chemical pesticides and fertilizers, ensuring the highest quality and nutritional value."
-      },
-      {
-        url: "/brandimages/ooo-farms/farmers.jpg",
-        description: "Local farmers implementing traditional and sustainable farming methods. Our partnership with these farmers helps preserve indigenous agricultural knowledge and promotes fair trade practices."
-      }
-    ],
-    contact: {
-      email: "connect@ooofarms.org",
-      phone: "+91-9876543211"
-    },
-    sustainabilityRatings: {
-      environmental: 4.9,
-      social: 4.7,
-      ethical: 4.8,
-      durability: 4.6,
-      innovation: 4.5
-    }
-  },
-  {
-    id: "the-summer-house",
-    name: "The Summer House",
-    thumbnail: "/brandimages/summer-house/thumbnail.jpg",
-    imageUrl: "/banners/the-summer-house.png",
-    categories: [Category.CLOTHING, Category.HOME],
-    shortDescription: "Sustainable fashion and lifestyle brand creating timeless pieces with natural materials",
-    description: `The Summer House creates sustainable fashion and home accessories that stand the test of time. Using natural fabrics and traditional craftsmanship, they produce clothing and home items that are both beautiful and environmentally responsible.`,
-    url: "https://thesummerhouse.in",
-    themeColor: "#5D4037",
-    businessStartDate: "2012-03-01",
-    cofounders: [
-      {
-        name: "Shivani Poddar"
-      },
-      {
-        name: "Rekha Datla"
-      }
-    ],
-    productRange: ["Dresses", "Tops", "Home Textiles", "Accessories", "Sustainable Homewares"],
-    certifications: ["GOTS Certified", "Fair Trade Certified", "Handloom Mark"],
-    availableOn: [
-      {
-        name: "Myntra",
-        url: "https://myntra.com/the-summer-house"
-      },
-      {
-        name: "Nykaa Fashion",
-        url: "https://nykaafashion.com/the-summer-house"
-      }
-    ],
-    metrics: {
-      likes: 945
-    },
-    images: [
-      {
-        url: "/brandimages/summer-house/dress1.jpg",
-        description: "Handcrafted organic cotton dress featuring natural dyes and traditional textile techniques. This piece represents our commitment to sustainable fashion and timeless design."
-      },
-      {
-        url: "/brandimages/summer-house/home1.jpg",
-        description: "Sustainable home collection made from natural materials. Each piece is carefully crafted to combine functionality with environmental consciousness."
-      },
-      {
-        url: "/brandimages/summer-house/artisans.jpg",
-        description: "Our skilled artisans at work, preserving traditional craftsmanship while creating contemporary designs. Their expertise ensures each piece meets our high standards of quality and sustainability."
-      }
-    ],
-    contact: {
-      email: "hello@thesummerhouse.in",
-      phone: "+91-9876543212"
-    },
-    sustainabilityRatings: {
-      environmental: 4.7,
-      social: 4.8,
-      ethical: 4.9,
-      durability: 4.5,
-      innovation: 4.6
-    }
-  },
-  {
-    id: "the-herb-boutique",
-    name: "The Herb Boutique",
-    thumbnail: "/brandimages/the-herb-boutique/thumbnail.jpg",
-    imageUrl: "/banners/the-herb-boutique.png",
-    categories: [Category.BEAUTY, Category.HEALTH],
-    shortDescription: "Organic skincare and wellness products made from traditional herbs",
-    description: `The Herb Boutique creates natural skincare and wellness products using traditional herbal knowledge and modern science. Their products combine ancient Ayurvedic wisdom with contemporary research to deliver effective, chemical-free solutions.`,
-    url: "https://herbboutique.in",
-    themeColor: "#558B2F",
-    businessStartDate: "2014-09-10",
-    cofounders: [
-      {
-        name: "Dr. Meera Iyer"
-      },
-      {
-        name: "Sanjay Kumar"
-      }
-    ],
-    productRange: ["Face Care", "Body Care", "Hair Care", "Wellness Supplements", "Aromatherapy"],
-    certifications: ["Made Safe Certified", "Cruelty-Free", "Ayurvedic License", "ISO 22716:2007"],
-    availableOn: [
-      {
-        name: "Amazon",
-        url: "https://amazon.com/the-herb-boutique"
-      },
-      {
-        name: "Nykaa",
-        url: "https://nykaa.com/the-herb-boutique"
-      }
-    ],
-    metrics: {
-      likes: 1625
-    },
-    images: [
-      {
-        url: "/brandimages/herb-boutique/products1.jpg",
-        description: "Our signature range of organic skincare products, featuring carefully selected herbs and natural ingredients. Each product is formulated to provide effective, chemical-free skincare solutions."
-      },
-      {
-        url: "/brandimages/herb-boutique/herbs.jpg",
-        description: "Fresh herbs from our organic garden used in our products. We grow and harvest our own herbs to ensure the highest quality and potency in our formulations."
-      },
-      {
-        url: "/brandimages/herb-boutique/process.jpg",
-        description: "Our natural product creation process, combining traditional knowledge with modern techniques. This careful approach ensures both effectiveness and sustainability in our products."
-      }
-    ],
-    contact: {
-      email: "care@herbboutique.in",
-      phone: "+91-9876543213"
-    },
-    sustainabilityRatings: {
-      environmental: 4.8,
-      social: 4.6,
-      ethical: 4.7,
-      durability: 4.4,
-      innovation: 4.5
-    }
-  },
-  {
-    id: "i-was-a-saree",
-    name: "I Was A Saree",
-    thumbnail: "/brandimages/i-was-a-saree/thumbnail.jpg",
-    imageUrl: "/banners/i-was-a-saree.png",
-    categories: [Category.CLOTHING, Category.ACCESSORIES],
-    shortDescription: "Upcycled fashion brand transforming pre-loved saris into contemporary designs",
-    description: `I Was A Sari gives new life to pre-loved saris by transforming them into contemporary fashion pieces. This innovative approach to sustainable fashion combines traditional Indian textiles with modern design while providing employment to local artisans.`,
-    url: "https://iwasasaree.com",
-    themeColor: "#689F38",
-    businessStartDate: "2013-11-15",
-    cofounders: [
-      {
-        name: "Stefano Funari"
-      },
-      {
-        name: "Poornima Pande"
-      }
-    ],
-    productRange: ["Upcycled Dresses", "Accessories", "Bags", "Scarves", "Home Decor"],
-    certifications: ["B Corp Certified", "Social Enterprise Mark", "Craftmark Certified"],
-    availableOn: [
-      {
-        name: "Ajio",
-        url: "https://ajio.com/i-was-a-saree"
-      },
-      {
-        name: "Myntra",
-        url: "https://myntra.com/i-was-a-saree"
-      }
-    ],
-    metrics: {
-      likes: 1450
-    },
-    images: [
-      {
-        url: "/brandimages/i-was-a-saree/collection1.jpg",
-        description: "Our latest collection of upcycled fashion pieces, each created from pre-loved saris. Every item tells a unique story while contributing to sustainable fashion."
-      },
-      {
-        url: "/brandimages/i-was-a-saree/workshop.jpg",
-        description: "Our workshop where skilled artisans transform vintage saris into contemporary fashion pieces. This process combines traditional craftsmanship with modern design."
-      },
-      {
-        url: "/brandimages/i-was-a-saree/accessories.jpg",
-        description: "Handcrafted accessories made from upcycled sari fabrics. Each piece is unique and demonstrates our commitment to zero-waste fashion."
-      }
-    ],
-    contact: {
-      email: "hello@iwasasari.com",
-      phone: "+91-9876543214"
-    },
-    sustainabilityRatings: {
-      environmental: 4.9,
-      social: 4.8,
-      ethical: 4.7,
-      durability: 4.5,
-      innovation: 4.8
-    }
   }
 ];
-
-export default sustainableBrands;
