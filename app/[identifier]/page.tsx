@@ -1,7 +1,9 @@
 'use client'
 
+import React from 'react';
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Metadata } from 'next';
 import { sustainableBrands } from "@/lib/brands";
 import { ImageGallery } from "@/components/ImageGallery";
 import { BrandHeader } from "@/components/BrandHeader";
@@ -14,7 +16,7 @@ import {
 } from "lucide-react";
 
 const sampleComments: { id: string; author: { name: string; location: string; avatar?: string; }; rating: number; date: string; content: string; }[] = [
-  // Sample comments data
+  // Your sample comments data
 ];
 
 const slugify = (text: string) => {
@@ -23,18 +25,30 @@ const slugify = (text: string) => {
 
 const getBrandByIdentifier = (identifier: string) => {
   return sustainableBrands.find(
-    (brand) => slugify(brand.name) === identifier
+    (brand) => slugify(brand.name) === identifier || brand.id === identifier
   );
 };
 
-type PageProps = {
+type Props = {
   params: {
-    identifier: string
-  }
+    identifier: string;
+  };
 };
 
-export default function BrandPage({ params }: PageProps) {
-  const { identifier } = params;
+// Optionally add metadata generation if needed
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const brand = getBrandByIdentifier(params.identifier);
+//   if (!brand) {
+//     return { title: 'Brand Not Found' };
+//   }
+//   return {
+//     title: brand.name,
+//     description: brand.content.about.slice(0, 160),
+//   };
+// }
+
+export default function BrandPage({ params }: Props) {
+  const { identifier } = React.use(params);
   const brand = getBrandByIdentifier(identifier);
 
   if (!brand) {
@@ -115,17 +129,6 @@ export default function BrandPage({ params }: PageProps) {
                       <div 
                         className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-2xl pointer-events-none" 
                       />
-                      <style jsx>{`
-                        iframe {
-                          opacity: 0.999;
-                        }
-                        .group:not(:hover) iframe {
-                          filter: brightness(1.01);
-                        }
-                        .group:hover iframe {
-                          filter: none;
-                        }
-                      `}</style>
                     </div>
                   </div>
                 </div>
@@ -147,14 +150,6 @@ export default function BrandPage({ params }: PageProps) {
               url={brand.url}
             />
           </div>
-        </div>
-
-        {/* Comment Section */}
-        <div className="px-2 sm:px-40 mt-16">
-          <CommentSection 
-            comments={sampleComments}
-            totalLikes={brand.metrics.likes}
-          />
         </div>
       </div>
     </div>

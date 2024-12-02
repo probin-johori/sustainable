@@ -8,7 +8,6 @@ import "./globals.css";
 // Configure Bricolage Grotesque font
 const bricolage = Bricolage_Grotesque({ 
   subsets: ['latin'],
-  // The font comes in weights: 200, 300, 400, 500, 600, 700, 800
   weight: ['200', '300', '400', '500', '600', '700', '800'],
   variable: '--font-bricolage',
 });
@@ -42,6 +41,7 @@ export default function RootLayout({
         className={`${bricolage.variable} ${geistMono.variable} ${geist.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <main className="flex-1">
+          {children} {/* Add this line to render the children */}
         </main>
         <Footer />
       </body>
